@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -28,15 +29,27 @@ public class ClientService {
         return result.map(ClientDTO::new);
     }
 
-    @Transactional(readOnly = true)
-    public ClientDTO inserir(ClientDTO dto) {
-       Client entity = new Client();
-       entity.setName(dto.getName());
-       entity.setCpf(dto.getCpf());
-       entity.setIncome(dto.getIncome());
-       entity.setBirthDate(dto.getBirthDate());
-       entity.setChildren(dto.getChildren());
-       entity = clientRepository.save(entity);
-       return new ClientDTO(entity);
+    @Transactional
+    public ClientDTO insert(ClientDTO dto) {
+        Client entity = new Client();
+        copyDtoToEntity(dto, entity);
+        entity = clientRepository.save(entity);
+        return new ClientDTO(entity);
+    }
+
+    @Transactional
+    public ClientDTO update(Long id, ClientDTO dto) {
+        Client entity = clientRepository.getReferenceById(id);
+        copyDtoToEntity(dto, entity);
+        entity = clientRepository.save(entity);
+        return new ClientDTO(entity);
+    }
+
+    private void copyDtoToEntity(ClientDTO dto, Client entity) {
+        entity.setName(dto.getName());
+        entity.setCpf(dto.getCpf());
+        entity.setIncome(dto.getIncome());
+        entity.setBirthDate(dto.getBirthDate());
+        entity.setChildren(dto.getChildren());
     }
 }
