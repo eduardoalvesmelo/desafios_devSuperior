@@ -19,7 +19,7 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id) {
-        Client client = clientRepository.findById(id).get();
+        Client client = clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Recurso não encontrado"));
         return new ClientDTO(client);
     }
 
