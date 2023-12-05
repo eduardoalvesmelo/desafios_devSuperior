@@ -22,9 +22,8 @@ public class ClientService {
         return new ClientDTO(client);
     }
 
-//    public List<ClientDTO> findAll() {
-//        List<Client> result = clientRepository.findAll();
-//        ClientDTO dto = new ClientDTO(client);
-//        return dto;
-//    }
+    public List<ClientDTO> findAll() {
+        List<Client> result = clientRepository.findAll();
+        return result.stream().map(x -> new ClientDTO(x)).toList();
+    }
 }

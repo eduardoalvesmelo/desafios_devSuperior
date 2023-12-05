@@ -21,5 +21,10 @@ public class ClientController {
     public ClientDTO findById(@PathVariable Long id) {
         return clientService.findById(id);
     }
+
+    @GetMapping()
+    public List<ClientDTO> findAll() {
+        return clientService.findAll();
+    }
 }
 
