@@ -1,6 +1,10 @@
 package com.eduardo.alves.desafios.dto;
 
 import com.eduardo.alves.desafios.entities.Client;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import org.hibernate.engine.spi.ManagedEntity;
 
 import java.time.LocalDate;
 
@@ -38,6 +42,7 @@ public class ClientDTO {
         return id;
     }
 
+    @NotBlank(message = "Não pode ser vazio")
     public String getName() {
         return name;
     }
@@ -50,6 +55,7 @@ public class ClientDTO {
         return income;
     }
 
+    @PastOrPresent(message = "Não pode ser data futura")
     public LocalDate getBirthDate() {
         return birthDate;
     }
